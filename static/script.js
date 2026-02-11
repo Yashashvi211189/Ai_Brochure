@@ -154,21 +154,35 @@ document.addEventListener('DOMContentLoaded', function() {
     function convertMarkdownToHtml(markdown) {
         let html = markdown;
         
-        // Convert headers
-        html = html.replace(/^## (.+)$/gm, '<h3>$1</h3>');
-        html = html.replace(/^### (.+)$/gm, '<h4>$1</h4>');
+        // Convert headers (h2, h3, h4)
+        html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+        html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+        html = html.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
         
         // Convert bold
         html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
         
-        // Convert lists
-        html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
-        html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+        // Convert lists (handle both - and •)
+        html = html.replace(/^[-•] (.+)$/gm, '<li>$1</li>');
+        html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
         
-        // Convert paragraphs
-        html = html.split('\n\n').map(para => {
-            if (!para.trim()) return '';
-            if (para.startsWith('<')) return para;
+        // Wrap consecutive list items in ul tags
+        html = html.replace(/(<li>.*?<\/li>(?:\s*<li>.*?<\/li>)*)/gs, function(match) {
+            return '<ul>' + match + '</ul>';
+        });
+        
+        // Convert checkmarks and arrows
+        html = html.replace(/✓/g, '✓');
+        html = html.replace(/→/g, '→');
+        
+        // Convert paragraphs (split by double newlines, but preserve HTML tags)
+        let paragraphs = html.split(/\n\n+/);
+        html = paragraphs.map(para => {
+            para = para.trim();
+            if (!para) return '';
+            // If it already starts with HTML tag, return as is
+            if (para.match(/^<[hul]/)) return para;
+            // Otherwise wrap in paragraph
             return `<p>${para}</p>`;
         }).join('');
         
