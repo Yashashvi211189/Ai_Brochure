@@ -125,6 +125,26 @@ Each file contains a marketing-ready brochure tailored to that audience.
 - **Local Processing**: Everything runs locally, no external API calls needed (stubbed version)
 - **Clean Architecture**: Modular Python code that's easy to understand and extend
 
+## Deployment
+
+This app can be deployed online for free using Render.com, Railway, or PythonAnywhere.
+
+**Quick Deploy to Render.com:**
+1. Push code to GitHub (already done ✅)
+2. Go to https://render.com
+3. Connect your GitHub repo
+4. Create new Web Service
+5. Use build command: `pip install -r requirements.txt`
+6. Use start command: `gunicorn app:app`
+7. Deploy!
+
+See `DEPLOYMENT.md` for detailed instructions.
+
+**Live Demo URL:** (After deployment)
+```
+https://your-app-name.onrender.com
+```
+
 ## Notes
 
 - Input source is strictly **local HTML**. There is no URL fetching.
