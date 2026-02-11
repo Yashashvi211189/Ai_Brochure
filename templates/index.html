@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Brochure Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="hero">
+            <h1 class="hero-title">✨ AI-Powered Brochure Generator</h1>
+            <p class="hero-subtitle">Create professional brochures from HTML files, images, or your own ideas</p>
+        </header>
+
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-card">
+                    <!-- Tabs -->
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="html">
+                            <span>📄</span> HTML File
+                        </button>
+                        <button class="tab-btn" data-tab="image">
+                            <span>🖼️</span> Image
+                        </button>
+                        <button class="tab-btn" data-tab="text">
+                            <span>💡</span> Text/Idea
+                        </button>
+                    </div>
+
+                    <!-- HTML Tab -->
+                    <div class="tab-content active" id="html-tab">
+                        <div class="upload-icon">📄</div>
+                        <h2>Upload HTML File</h2>
+                        <p class="upload-hint">Select a local HTML file from your company's website</p>
+                        
+                        <form id="htmlForm" enctype="multipart/form-data">
+                            <input type="hidden" name="input_type" value="html">
+                            <div class="file-input-wrapper">
+                                <input type="file" id="htmlFile" name="html_file" accept=".html,.htm" required>
+                                <label for="htmlFile" class="file-label">
+                                    <span class="file-label-text">Choose HTML File</span>
+                                    <span class="file-label-icon">📁</span>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="btn-text">Generate Brochures</span>
+                                <span class="btn-loader" style="display: none;">⏳ Processing...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Image Tab -->
+                    <div class="tab-content" id="image-tab">
+                        <div class="upload-icon">🖼️</div>
+                        <h2>Upload Image</h2>
+                        <p class="upload-hint">Upload a company logo, screenshot, or any image related to your business</p>
+                        
+                        <form id="imageForm" enctype="multipart/form-data">
+                            <input type="hidden" name="input_type" value="image">
+                            <div class="file-input-wrapper">
+                                <input type="file" id="imageFile" name="image_file" accept="image/*" required>
+                                <label for="imageFile" class="file-label">
+                                    <span class="file-label-text">Choose Image</span>
+                                    <span class="file-label-icon">🖼️</span>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="btn-text">Generate Brochures</span>
+                                <span class="btn-loader" style="display: none;">⏳ Processing...</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Text/Idea Tab -->
+                    <div class="tab-content" id="text-tab">
+                        <div class="upload-icon">💡</div>
+                        <h2>Enter Your Idea</h2>
+                        <p class="upload-hint">Describe your company, product, or business idea in your own words</p>
+                        
+                        <form id="textForm">
+                            <input type="hidden" name="input_type" value="text">
+                            <div class="text-input-wrapper">
+                                <textarea 
+                                    id="textInput" 
+                                    name="text_input" 
+                                    placeholder="Example:&#10;&#10;Tech Startup&#10;We build AI-powered solutions for enterprises&#10;Our platform helps companies automate workflows&#10;Focus on machine learning and cloud infrastructure"
+                                    rows="8"
+                                    required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="btn-text">Generate Brochures</span>
+                                <span class="btn-loader" style="display: none;">⏳ Processing...</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="results" class="results-section" style="display: none;">
+                <h2 class="results-title">Your Brochures</h2>
+                <div class="brochures-grid" id="brochuresGrid">
+                    <!-- Brochures will be inserted here -->
+                </div>
+            </div>
+
+            <div id="error" class="error-message" style="display: none;"></div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
